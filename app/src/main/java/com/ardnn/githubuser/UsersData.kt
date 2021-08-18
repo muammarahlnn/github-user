@@ -11,9 +11,9 @@ class UsersData(private val context: Context) {
     private val usersAva: TypedArray =
         context.resources.obtainTypedArray(R.array.users_ava)
 
-    val userList: ArrayList<UserModel>
+    val userList: MutableList<UserModel>
     get() {
-        val list = arrayListOf<UserModel>()
+        val list = mutableListOf<UserModel>()
         var inputStream: InputStream? = null
         var jsonString: String
 

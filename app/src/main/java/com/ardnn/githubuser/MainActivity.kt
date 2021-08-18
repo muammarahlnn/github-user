@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ardnn.githubuser.databinding.ActivityMainBinding
 import org.json.JSONArray
@@ -40,7 +43,24 @@ class MainActivity : AppCompatActivity(), UsersAdapter.ClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar_main, menu)
-        return super.onCreateOptionsMenu(menu)
+
+        // if user is searching
+        val searchItem = menu?.findItem(R.id.toolbar_item_search)
+        val searchView = searchItem?.actionView as SearchView
+        searchView.queryHint = "Search..."
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                usersAdapter.filter.filter(newText)
+                return true
+            }
+
+        })
+
+        return true
     }
 
     override fun itemClicked(user: UserModel) {
