@@ -1,5 +1,6 @@
 package com.ardnn.githubuser
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -64,6 +65,8 @@ class MainActivity : AppCompatActivity(), UsersAdapter.ClickListener {
     }
 
     override fun itemClicked(user: UserModel) {
-        Toast.makeText(this, "You clicked ${user.name}", Toast.LENGTH_SHORT).show()
+        val goToDetail = Intent(this@MainActivity, DetailActivity::class.java)
+        goToDetail.putExtra(DetailActivity.EXTRA_USER, user)
+        startActivity(goToDetail)
     }
 }
